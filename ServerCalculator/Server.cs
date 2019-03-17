@@ -33,42 +33,68 @@ namespace ServerCalculator
         {
             float a = BitConverter.ToSingle(data, 1);
             float b = BitConverter.ToSingle(data, 5);
-            if ((a + b) > float.MaxValue)
-                throw new ServerException("Result too big, max value reached");
-            byte[] c = BitConverter.GetBytes(a + b);
+            float c = a + b;
 
-            transport.Send(c, sender);
+            if (a > float.MaxValue || a < float.MinValue ||
+                b > float.MaxValue || b < float.MinValue ||
+                c > float.MaxValue || c < float.MinValue)
+                throw new ServerException("Invalid input or result out of float range");
+
+            byte[] output = BitConverter.GetBytes(c);
+
+            transport.Send(output, sender);
         }
 
         private void Sub(byte[] data, EndPoint sender)
         {
             float a = BitConverter.ToSingle(data, 1);
             float b = BitConverter.ToSingle(data, 5);
-            byte[] c = BitConverter.GetBytes(a - b);
+            float c = a - b;
 
-            transport.Send(c, sender);
+            if (a > float.MaxValue || a < float.MinValue ||
+                b > float.MaxValue || b < float.MinValue ||
+                c > float.MaxValue || c < float.MinValue)
+                throw new ServerException("Invalid input or result out of float range");
+
+            byte[] output = BitConverter.GetBytes(c);
+
+            transport.Send(output, sender);
         }
 
         private void Mul(byte[] data, EndPoint sender)
         {
             float a = BitConverter.ToSingle(data, 1);
             float b = BitConverter.ToSingle(data, 5);
-            if ((a * b) > float.MaxValue)
-                throw new ServerException("Result too big, max value reached");
-            byte[] c = BitConverter.GetBytes(a * b);
+            float c = a * b;
 
-            transport.Send(c, sender);
+            if (a > float.MaxValue || a < float.MinValue ||
+                b > float.MaxValue || b < float.MinValue ||
+                c > float.MaxValue || c < float.MinValue)
+                throw new ServerException("Invalid input or result out of float range");
+
+            byte[] output = BitConverter.GetBytes(c);
+
+            transport.Send(output, sender);
         }
 
         private void Div(byte[] data, EndPoint sender)
         {
             float a = BitConverter.ToSingle(data, 1);
             float b = BitConverter.ToSingle(data, 5);
+
             if (b == 0.0f)
                 throw new ServerException("Can't divide by zero");
-            byte[] c = BitConverter.GetBytes(a / b);
 
-            transport.Send(c, sender);
+            float c = a / b;
+
+            if (a > float.MaxValue || a < float.MinValue ||
+                b > float.MaxValue || b < float.MinValue ||
+                c > float.MaxValue || c < float.MinValue)
+                throw new ServerException("Invalid input or result out of float range");
+
+            byte[] output = BitConverter.GetBytes(c);
+
+            transport.Send(output, sender);
         }
 
         public void Run()
