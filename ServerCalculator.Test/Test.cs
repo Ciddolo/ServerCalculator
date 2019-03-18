@@ -457,6 +457,26 @@ namespace ServerCalculator.Test
         }
 
         [Test]
+        public void TestDivMaxValue()
+        {
+            FakePacket packet = new FakePacket(3, float.MaxValue, 0.1f);
+
+            transport.ClientEnqueue(packet, "tester", 0);
+            
+            Assert.That(() => server.SingleStep(), Throws.InstanceOf<ServerException>());
+        }
+
+        [Test]
+        public void TestDivMinValue()
+        {
+            FakePacket packet = new FakePacket(3, float.MinValue, 0.1f);
+
+            transport.ClientEnqueue(packet, "tester", 0);
+
+            Assert.That(() => server.SingleStep(), Throws.InstanceOf<ServerException>());
+        }
+
+        [Test]
         public void TestDivByZero()
         {
             FakePacket packet = new FakePacket(3, 10.0f, 0.0f);
