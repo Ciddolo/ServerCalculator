@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Text;
-using System.Net;
 using NUnit.Framework;
-using System.Collections.Generic;
 
 namespace ServerCalculator.Test
 {

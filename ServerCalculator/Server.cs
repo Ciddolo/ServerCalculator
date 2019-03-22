@@ -108,7 +108,7 @@ namespace ServerCalculator
         public void SingleStep()
         {
             EndPoint sender = transport.CreateEndPoint();
-            byte[] data = transport.Recv(68, ref sender);
+            byte[] data = transport.Recv(72, ref sender);
 
             if (data != null)
             {
